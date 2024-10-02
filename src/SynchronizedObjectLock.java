@@ -7,8 +7,8 @@ public class SynchronizedObjectLock implements Runnable {
         method();
     }
 
-    // synchronized用在普通方法上，默认的锁就是this，当前实例
-    public synchronized void method() {
+    // synchronized用在静态方法上，默认的锁就是当前所在的Class类，所以无论是哪个线程访问它，需要的锁都只有一把
+    public static synchronized void method() {
         System.out.println("我是线程" + Thread.currentThread().getName());
         try {
             Thread.sleep(3000);
@@ -19,7 +19,6 @@ public class SynchronizedObjectLock implements Runnable {
     }
 
     public static void main(String[] args) {
-        // t1和t2对应的this是两个不同的实例，所以代码不会串行
         Thread t1 = new Thread(instance1);
         Thread t2 = new Thread(instance2);
         t1.start();
